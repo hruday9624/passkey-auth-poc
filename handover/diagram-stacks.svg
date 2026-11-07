@@ -1,0 +1,176 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1880 1410" width="1880" height="1410" role="img" aria-labelledby="t3 d3" font-family="Segoe UI, system-ui, -apple-system, Roboto, Arial, sans-serif"><title id="t3">Passkey sign-in: Supabase proof of concept and other stacks</title><desc id="d3">Top: the three steps (admin adds a person, person sets up a passkey, person signs in) and what the phone, the app server, Supabase Auth and the Supabase database each do. Bottom: a table of the same five jobs done with Supabase, with your own server and a WebAuthn library, and with a managed auth service. Then the five ideas that stay the same on any stack.</desc><rect width="1880" height="1410" fill="#ffffff"/><text x="50" y="52" font-size="28" font-weight="700" fill="#1f2933" text-anchor="start">Passkey sign-in: how the proof of concept works, and how to build it on another stack</text>
+<text x="50" y="82" font-size="16" font-weight="400" fill="#52606d" text-anchor="start">Top: what we built (Next.js and Supabase). Bottom: the same jobs on a stack of your own.</text>
+<rect x="50" y="110" width="1780" height="40" rx="8" fill="#eef2ff" stroke="#c7d2fe" stroke-width="1.5"/>
+<text x="70" y="137" font-size="18" font-weight="700" fill="#1d4ed8" text-anchor="start">A</text>
+<text x="98" y="137" font-size="18" font-weight="700" fill="#1d4ed8" text-anchor="start">What we built</text>
+<text x="254.6" y="137" font-size="14.5" font-weight="400" fill="#52606d" text-anchor="start">The three steps, and who does what in each</text>
+<rect x="50" y="170" width="391" height="304" rx="12" fill="#ffffff" stroke="#b42318" stroke-width="2.2" stroke-dasharray="7 5"/>
+<text x="72" y="206" font-size="20" font-weight="700" fill="#1f2933" text-anchor="start">Phone or browser</text>
+<text x="72" y="228" font-size="13.5" font-weight="400" fill="#52606d" text-anchor="start">The person&#x27;s own device</text>
+<circle cx="84" cy="261" r="13" fill="#1d4ed8"/>
+<text x="84" y="266" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+<text x="110" y="266" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">Admin types a name and an email, then</text>
+<text x="110" y="285" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">sends the link by hand.</text>
+<circle cx="84" cy="317" r="13" fill="#1d4ed8"/>
+<text x="84" y="322" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+<text x="110" y="322" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">Member opens the link and presses</text>
+<text x="110" y="341" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">Continue. The phone makes the key after a</text>
+<text x="110" y="360" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">face or fingerprint. The key never leaves</text>
+<text x="110" y="379" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">the phone.</text>
+<circle cx="84" cy="411" r="13" fill="#166534"/>
+<text x="84" y="416" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+<text x="110" y="416" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">Member presses Sign in with a passkey. The</text>
+<text x="110" y="435" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">phone signs a challenge. No email typed.</text>
+<rect x="513" y="170" width="391" height="304" rx="12" fill="#ffffff" stroke="#166534" stroke-width="2.2"/>
+<text x="535" y="206" font-size="20" font-weight="700" fill="#1f2933" text-anchor="start">App server</text>
+<text x="535" y="228" font-size="13.5" font-weight="400" fill="#52606d" text-anchor="start">Next.js on Vercel. Holds the secrets</text>
+<circle cx="547" cy="261" r="13" fill="#1d4ed8"/>
+<text x="547" y="266" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+<text x="573" y="266" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">Checks the admin. Makes a one-time link: a</text>
+<text x="573" y="285" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">random 256-bit token, only its hash is</text>
+<text x="573" y="304" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">kept, 15 minutes.</text>
+<circle cx="547" cy="336" r="13" fill="#1d4ed8"/>
+<text x="547" y="341" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+<text x="573" y="341" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">Spends the link when Continue is pressed</text>
+<text x="573" y="360" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">(opening it spends nothing). Hands over a</text>
+<text x="573" y="379" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">short setup session.</text>
+<circle cx="547" cy="411" r="13" fill="#166534"/>
+<text x="547" y="416" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+<text x="573" y="416" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">On every page: verifies the token and</text>
+<text x="573" y="435" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">requires that it was made by a passkey.</text>
+<text x="573" y="454" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">Anything else is refused.</text>
+<rect x="976" y="170" width="391" height="304" rx="12" fill="#ffffff" stroke="#166534" stroke-width="2.2"/>
+<text x="998" y="206" font-size="20" font-weight="700" fill="#1f2933" text-anchor="start">Supabase Auth</text>
+<text x="998" y="228" font-size="13.5" font-weight="400" fill="#52606d" text-anchor="start">Hosted service. Passkeys turned on</text>
+<circle cx="1010" cy="261" r="13" fill="#1d4ed8"/>
+<text x="1010" y="266" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+<text x="1036" y="266" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">Creates the account with a random password</text>
+<text x="1036" y="285" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">nobody sees.</text>
+<circle cx="1010" cy="317" r="13" fill="#1d4ed8"/>
+<text x="1010" y="322" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+<text x="1036" y="322" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">Stores the public key when</text>
+<text x="1036" y="341" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">registerPasskey() runs in the browser.</text>
+<circle cx="1010" cy="373" r="13" fill="#166534"/>
+<text x="1010" y="378" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+<text x="1036" y="378" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">Checks the signature and issues the</text>
+<text x="1036" y="397" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">session token, marked amr = passkey.</text>
+<rect x="1439" y="170" width="391" height="304" rx="12" fill="#ffffff" stroke="#166534" stroke-width="2.2"/>
+<text x="1461" y="206" font-size="20" font-weight="700" fill="#1f2933" text-anchor="start">Supabase database</text>
+<text x="1461" y="228" font-size="13.5" font-weight="400" fill="#52606d" text-anchor="start">No table access. 8 checked functions</text>
+<circle cx="1473" cy="261" r="13" fill="#1d4ed8"/>
+<text x="1473" y="266" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+<text x="1499" y="266" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">Stores the member and the hash of the</text>
+<text x="1499" y="285" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">link.</text>
+<circle cx="1473" cy="317" r="13" fill="#1d4ed8"/>
+<text x="1473" y="322" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+<text x="1499" y="322" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">Spends the link in one atomic update:</text>
+<text x="1499" y="341" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">right hash, unused, not expired.</text>
+<circle cx="1473" cy="373" r="13" fill="#166534"/>
+<text x="1473" y="378" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+<text x="1499" y="378" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">Says who the member is, reading the id</text>
+<text x="1499" y="397" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">from the token, never from a form field.</text>
+<line x1="455" y1="210" x2="499" y2="210" stroke="#1f2933" stroke-width="2.2"/>
+<polygon points="507,210 496,204 496,216" fill="#1f2933"/>
+<polygon points="447,210 458,204 458,216" fill="#1f2933"/>
+<line x1="918" y1="210" x2="962" y2="210" stroke="#1f2933" stroke-width="2.2"/>
+<polygon points="970,210 959,204 959,216" fill="#1f2933"/>
+<polygon points="910,210 921,204 921,216" fill="#1f2933"/>
+<line x1="1381" y1="210" x2="1425" y2="210" stroke="#1f2933" stroke-width="2.2"/>
+<polygon points="1433,210 1422,204 1422,216" fill="#1f2933"/>
+<polygon points="1373,210 1384,204 1384,216" fill="#1f2933"/>
+<text x="477" y="194" font-size="12.5" font-weight="400" fill="#52606d" text-anchor="middle">calls</text>
+<text x="940" y="194" font-size="12.5" font-weight="400" fill="#52606d" text-anchor="middle">calls</text>
+<text x="1403" y="194" font-size="12.5" font-weight="400" fill="#52606d" text-anchor="middle">calls</text>
+<rect x="50" y="492" width="1780" height="54" rx="12" fill="#f0fdf4" stroke="#166534" stroke-width="2"/>
+<text x="74" y="525" font-size="16.5" font-weight="700" fill="#166534" text-anchor="start">The one rule, checked on every page:</text>
+<text x="398" y="525" font-size="16" font-weight="400" fill="#1f2933" text-anchor="start">did this person get in with a passkey? A setup link does not count. A password does not count.</text>
+<rect x="50" y="580" width="1780" height="40" rx="8" fill="#eef2ff" stroke="#c7d2fe" stroke-width="1.5"/>
+<text x="70" y="607" font-size="18" font-weight="700" fill="#1d4ed8" text-anchor="start">B</text>
+<text x="98" y="607" font-size="18" font-weight="700" fill="#1d4ed8" text-anchor="start">The same jobs on another stack</text>
+<text x="428.0" y="607" font-size="14.5" font-weight="400" fill="#52606d" text-anchor="start">Five jobs, whatever you build on</text>
+<rect x="340" y="634" width="494" height="38" rx="8" fill="#fff4e0" stroke="#8a4b00" stroke-width="1.8"/>
+<text x="356" y="659" font-size="15.5" font-weight="700" fill="#8a4b00" text-anchor="start">What we used: Supabase</text>
+<rect x="838" y="634" width="494" height="38" rx="8" fill="#eef2ff" stroke="#1d4ed8" stroke-width="1.8"/>
+<text x="854" y="659" font-size="15.5" font-weight="700" fill="#1d4ed8" text-anchor="start">Your own server and a WebAuthn library</text>
+<rect x="1336" y="634" width="494" height="38" rx="8" fill="#ecfdf3" stroke="#166534" stroke-width="1.8"/>
+<text x="1352" y="659" font-size="15.5" font-weight="700" fill="#166534" text-anchor="start">A managed auth service</text>
+<rect x="50" y="682" width="280" height="86" rx="8" fill="#f8fafc" stroke="#cbd2d9" stroke-width="1.5"/>
+<text x="66" y="712" font-size="15.5" font-weight="700" fill="#1f2933" text-anchor="start">Add the member and send the</text>
+<text x="66" y="732" font-size="15.5" font-weight="700" fill="#1f2933" text-anchor="start">first link</text>
+<rect x="340" y="682" width="494" height="86" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.5"/>
+<text x="356" y="712" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">createUser with a random password, then generateLink and</text>
+<text x="356" y="732" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">verifyOtp to open a short setup session. The link itself is our</text>
+<text x="356" y="752" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">own token.</text>
+<rect x="838" y="682" width="494" height="86" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.5"/>
+<text x="854" y="712" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">Your admin page and a table of one-time tokens (hash only,</text>
+<text x="854" y="732" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">expiry, used flag). No account session is needed: the server</text>
+<text x="854" y="752" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">can issue the registration challenge directly.</text>
+<rect x="1336" y="682" width="494" height="86" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.5"/>
+<text x="1352" y="712" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">Use the provider&#x27;s invite or enrolment feature, or keep the</text>
+<text x="1352" y="732" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">same own-token link in front of it.</text>
+<rect x="50" y="778" width="280" height="86" rx="8" fill="#f8fafc" stroke="#cbd2d9" stroke-width="1.5"/>
+<text x="66" y="808" font-size="15.5" font-weight="700" fill="#1f2933" text-anchor="start">Keep the account and the</text>
+<text x="66" y="828" font-size="15.5" font-weight="700" fill="#1f2933" text-anchor="start">public key</text>
+<rect x="340" y="778" width="494" height="86" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.5"/>
+<text x="356" y="808" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">Supabase Auth holds the user and the passkey&#x27;s public key. Our</text>
+<text x="356" y="828" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">own tables hold the member and the link hash.</text>
+<rect x="838" y="778" width="494" height="86" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.5"/>
+<text x="854" y="808" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">Two tables you own: users, and credentials (credential id,</text>
+<text x="854" y="828" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">public key, counter, transports). Works in Postgres, MySQL or</text>
+<text x="854" y="848" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">MongoDB.</text>
+<rect x="1336" y="778" width="494" height="86" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.5"/>
+<text x="1352" y="808" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">The provider holds both. You keep your own member list and</text>
+<text x="1352" y="828" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">roles.</text>
+<rect x="50" y="874" width="280" height="126" rx="8" fill="#f8fafc" stroke="#cbd2d9" stroke-width="1.5"/>
+<text x="66" y="904" font-size="15.5" font-weight="700" fill="#1f2933" text-anchor="start">Create the passkey (once)</text>
+<rect x="340" y="874" width="494" height="126" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.5"/>
+<text x="356" y="904" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">registerPasskey() runs in the browser. Supabase checks the</text>
+<text x="356" y="924" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">reply and stores the key.</text>
+<rect x="838" y="874" width="494" height="126" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.5"/>
+<text x="854" y="904" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">The server makes a challenge and checks the phone&#x27;s reply with</text>
+<text x="854" y="924" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">a library, for example SimpleWebAuthn (Node), py_webauthn</text>
+<text x="854" y="944" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">(Python), Spring Security 6.4+ (Java), Fido2NetLib (.NET),</text>
+<text x="854" y="964" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">go-webauthn (Go), webauthn-ruby (Rails), webauthn-framework</text>
+<text x="854" y="984" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">(PHP).</text>
+<rect x="1336" y="874" width="494" height="126" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.5"/>
+<text x="1352" y="904" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">Switch passkeys on in the provider (for example Auth0, AWS</text>
+<text x="1352" y="924" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">Cognito, Keycloak, Clerk or Hanko) and call its SDK.</text>
+<rect x="50" y="1010" width="280" height="70" rx="8" fill="#f8fafc" stroke="#cbd2d9" stroke-width="1.5"/>
+<text x="66" y="1040" font-size="15.5" font-weight="700" fill="#1f2933" text-anchor="start">Sign in with the passkey</text>
+<text x="66" y="1060" font-size="15.5" font-weight="700" fill="#1f2933" text-anchor="start">(every time)</text>
+<rect x="340" y="1010" width="494" height="70" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.5"/>
+<text x="356" y="1040" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">signInWithPasskey(). No email typed. Supabase checks the</text>
+<text x="356" y="1060" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">signature and issues the session.</text>
+<rect x="838" y="1010" width="494" height="70" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.5"/>
+<text x="854" y="1040" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">Same library, sign-in half. Use discoverable credentials so no</text>
+<text x="854" y="1060" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">email is typed, then issue your own session or JWT.</text>
+<rect x="1336" y="1010" width="494" height="70" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.5"/>
+<text x="1352" y="1040" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">A hosted login page or an SDK call. The provider issues the</text>
+<text x="1352" y="1060" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">token.</text>
+<rect x="50" y="1090" width="280" height="86" rx="8" fill="#f8fafc" stroke="#cbd2d9" stroke-width="1.5"/>
+<text x="66" y="1120" font-size="15.5" font-weight="700" fill="#1f2933" text-anchor="start">Prove it was a passkey, on</text>
+<text x="66" y="1140" font-size="15.5" font-weight="700" fill="#1f2933" text-anchor="start">every page</text>
+<rect x="340" y="1090" width="494" height="86" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.5"/>
+<text x="356" y="1120" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">The token&#x27;s amr claim lists passkey. getClaims() verifies the</text>
+<text x="356" y="1140" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">token on the server and the app checks amr.</text>
+<rect x="838" y="1090" width="494" height="86" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.5"/>
+<text x="854" y="1120" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">Your session records method = passkey at sign-in. Check it on</text>
+<text x="854" y="1140" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">the server on every request, and do not trust a client-side</text>
+<text x="854" y="1160" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">object.</text>
+<rect x="1336" y="1090" width="494" height="86" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.5"/>
+<text x="1352" y="1120" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">Look for a sign-in-method claim in the token. Names differ by</text>
+<text x="1352" y="1140" font-size="14" font-weight="400" fill="#1f2933" text-anchor="start">provider, so confirm one exists before you rely on it.</text>
+<rect x="50" y="1200" width="1780" height="132" rx="12" fill="#f0fdf4" stroke="#166534" stroke-width="2"/>
+<text x="74" y="1232" font-size="17" font-weight="700" fill="#166534" text-anchor="start">Same on every stack, because none of it is Supabase</text>
+<text x="74" y="1262" font-size="15" font-weight="700" fill="#166534" text-anchor="start">•</text>
+<text x="90" y="1262" font-size="13.5" font-weight="400" fill="#1f2933" text-anchor="start">The setup link is a random token, stored only as a keyed hash, good for one use and 15 minutes.</text>
+<text x="952" y="1262" font-size="15" font-weight="700" fill="#166534" text-anchor="start">•</text>
+<text x="968" y="1262" font-size="13.5" font-weight="400" fill="#1f2933" text-anchor="start">Opening the link spends nothing. Pressing Continue spends it, so chat previews cannot burn it.</text>
+<text x="74" y="1286" font-size="15" font-weight="700" fill="#166534" text-anchor="start">•</text>
+<text x="90" y="1286" font-size="13.5" font-weight="400" fill="#1f2933" text-anchor="start">The server checks the sign-in method on every page. Hiding a page is not the check.</text>
+<text x="952" y="1286" font-size="15" font-weight="700" fill="#166534" text-anchor="start">•</text>
+<text x="968" y="1286" font-size="13.5" font-weight="400" fill="#1f2933" text-anchor="start">Passkeys belong to the site address (the relying-party ID). Pick the final domain before anyone enrols.</text>
+<text x="74" y="1310" font-size="15" font-weight="700" fill="#166534" text-anchor="start">•</text>
+<text x="90" y="1310" font-size="13.5" font-weight="400" fill="#1f2933" text-anchor="start">Tell people to open links in Safari or Chrome, not inside a chat or mail app.</text>
+<text x="50" y="1366" font-size="12.5" font-weight="400" fill="#52606d" text-anchor="start">Proof of concept, built with AI assistance. The Supabase half is checked against the code (handover/build.py).</text>
+<text x="50" y="1386" font-size="12.5" font-weight="400" fill="#52606d" text-anchor="start">Library and service names in column 2 and 3 are from general knowledge and were not tested here: confirm current versions and passkey support before choosing. Details: carry-over.md, known-gaps.md.</text></svg>

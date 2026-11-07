@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 800" width="1400" height="800" role="img" aria-labelledby="t2 d2" font-family="Segoe UI, system-ui, -apple-system, Roboto, Arial, sans-serif">
+<title id="t2">How people sign in without a password</title>
+<desc id="d2">Three steps: the admin adds a person and gets a one-time link, the person sets up a passkey on their phone, and from then on the person signs in with the passkey. Below, the one rule every page checks, why it is safe, and what is not in this version.</desc>
+<rect width="1400" height="800" fill="#ffffff"/>
+<text x="50" y="52" font-size="30" font-weight="700" fill="#1f2933" text-anchor="start" >Signing in without a password</text>
+<text x="50" y="82" font-size="16" font-weight="400" fill="#52606d" text-anchor="start" >Three steps. After the first two, the person only ever does step 3.</text>
+<rect x="50" y="110" width="400" height="360" rx="14" fill="#ffffff" stroke="#1d4ed8" stroke-width="2"/>
+<circle cx="92" cy="154" r="24" fill="#1d4ed8"/>
+<text x="92" y="163" font-size="26" font-weight="700" fill="#ffffff" text-anchor="middle" >1</text>
+<text x="130" y="152" font-size="20" font-weight="700" fill="#1f2933" text-anchor="start" >The admin adds a person</text>
+<text x="130" y="176" font-size="14" font-weight="400" fill="#52606d" text-anchor="start" >Admin, once for each person</text>
+<text x="76" y="354" font-size="16" font-weight="400" fill="#1f2933" text-anchor="start" >The admin types a name and an email. The</text>
+<text x="76" y="377" font-size="16" font-weight="400" fill="#1f2933" text-anchor="start" >app makes a one-time link and shows it</text>
+<text x="76" y="400" font-size="16" font-weight="400" fill="#1f2933" text-anchor="start" >once. The admin sends the link to the</text>
+<text x="76" y="423" font-size="16" font-weight="400" fill="#1f2933" text-anchor="start" >person, for example on WhatsApp.</text>
+<rect x="500" y="110" width="400" height="360" rx="14" fill="#ffffff" stroke="#1d4ed8" stroke-width="2"/>
+<circle cx="542" cy="154" r="24" fill="#1d4ed8"/>
+<text x="542" y="163" font-size="26" font-weight="700" fill="#ffffff" text-anchor="middle" >2</text>
+<text x="580" y="152" font-size="20" font-weight="700" fill="#1f2933" text-anchor="start" >The person sets up a passkey</text>
+<text x="580" y="176" font-size="14" font-weight="400" fill="#52606d" text-anchor="start" >Person, once</text>
+<text x="526" y="354" font-size="16" font-weight="400" fill="#1f2933" text-anchor="start" >The person opens the link on their phone</text>
+<text x="526" y="377" font-size="16" font-weight="400" fill="#1f2933" text-anchor="start" >and presses Continue. The phone asks for</text>
+<text x="526" y="400" font-size="16" font-weight="400" fill="#1f2933" text-anchor="start" >a face or fingerprint and keeps the key.</text>
+<text x="526" y="423" font-size="16" font-weight="400" fill="#1f2933" text-anchor="start" >The link works once and runs out after 15</text>
+<text x="526" y="446" font-size="16" font-weight="400" fill="#1f2933" text-anchor="start" >minutes.</text>
+<rect x="950" y="110" width="400" height="360" rx="14" fill="#ffffff" stroke="#166534" stroke-width="2"/>
+<circle cx="992" cy="154" r="24" fill="#166534"/>
+<text x="992" y="163" font-size="26" font-weight="700" fill="#ffffff" text-anchor="middle" >3</text>
+<text x="1030" y="152" font-size="20" font-weight="700" fill="#1f2933" text-anchor="start" >The person signs in</text>
+<text x="1030" y="176" font-size="14" font-weight="400" fill="#52606d" text-anchor="start" >Person, every time</text>
+<text x="976" y="354" font-size="16" font-weight="400" fill="#1f2933" text-anchor="start" >The person presses Sign in with a passkey</text>
+<text x="976" y="377" font-size="16" font-weight="400" fill="#1f2933" text-anchor="start" >and approves with a face or fingerprint.</text>
+<text x="976" y="400" font-size="16" font-weight="400" fill="#1f2933" text-anchor="start" >No password, no email to type. The app</text>
+<text x="976" y="423" font-size="16" font-weight="400" fill="#1f2933" text-anchor="start" >checks the passkey and lets them in.</text>
+<circle cx="236" cy="238" r="17" fill="none" stroke="#1d4ed8" stroke-width="3"/>
+<path d="M 198 298 Q 198 264 236 264 Q 274 264 274 298 Z" fill="none" stroke="#1d4ed8" stroke-width="3" stroke-linejoin="round"/>
+<line x1="294" y1="252" x2="294" y2="280" stroke="#1d4ed8" stroke-width="4" stroke-linecap="round"/>
+<line x1="280" y1="266" x2="308" y2="266" stroke="#1d4ed8" stroke-width="4" stroke-linecap="round"/>
+<rect x="670" y="212" width="60" height="100" rx="10" fill="none" stroke="#1d4ed8" stroke-width="3"/>
+<circle cx="694" cy="252" r="9" fill="none" stroke="#1d4ed8" stroke-width="3"/>
+<line x1="703" y1="252" x2="720" y2="252" stroke="#1d4ed8" stroke-width="3" stroke-linecap="round"/>
+<line x1="715" y1="252" x2="715" y2="262" stroke="#1d4ed8" stroke-width="3" stroke-linecap="round"/>
+<line x1="692" y1="298" x2="708" y2="298" stroke="#1d4ed8" stroke-width="3" stroke-linecap="round"/>
+<rect x="1118" y="210" width="64" height="100" rx="4" fill="none" stroke="#166534" stroke-width="3"/>
+<polyline points="1134,260 1146,274 1168,244" fill="none" stroke="#166534" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="456" y1="290" x2="488" y2="290" stroke="#1f2933" stroke-width="3"/>
+<polygon points="496,290 483,282 483,298" fill="#1f2933"/>
+<line x1="906" y1="290" x2="938" y2="290" stroke="#1f2933" stroke-width="3"/>
+<polygon points="946,290 933,282 933,298" fill="#1f2933"/>
+<rect x="50" y="496" width="1300" height="86" rx="12" fill="#f0fdf4" stroke="#166534" stroke-width="2"/>
+<text x="76" y="528" font-size="17" font-weight="700" fill="#166534" text-anchor="start" >The one rule, checked before every page</text>
+<text x="76" y="554" font-size="16" font-weight="400" fill="#1f2933" text-anchor="start" >Did this person get in with a passkey? A setup link does not count. A password does not count. Only a passkey opens the door.</text>
+<rect x="50" y="604" width="640" height="150" rx="12" fill="#ffffff" stroke="#cbd2d9" stroke-width="2"/>
+<text x="76" y="636" font-size="17" font-weight="700" fill="#1f2933" text-anchor="start" >What protects it</text>
+<text x="80" y="670" font-size="16" font-weight="700" fill="#166534" text-anchor="start" >•</text>
+<text x="98" y="670" font-size="15" font-weight="400" fill="#1f2933" text-anchor="start" >Nobody chooses or knows a password, so there is none to steal or guess.</text>
+<text x="80" y="698" font-size="16" font-weight="700" fill="#166534" text-anchor="start" >•</text>
+<text x="98" y="698" font-size="15" font-weight="400" fill="#1f2933" text-anchor="start" >A setup link works once and dies after 15 minutes.</text>
+<text x="80" y="726" font-size="16" font-weight="700" fill="#166534" text-anchor="start" >•</text>
+<text x="98" y="726" font-size="15" font-weight="400" fill="#1f2933" text-anchor="start" >The key stays on the person&#x27;s phone. The app never sees it.</text>
+<rect x="710" y="604" width="640" height="150" rx="12" fill="#f8fafc" stroke="#52606d" stroke-width="2" stroke-dasharray="7 5"/>
+<text x="736" y="636" font-size="17" font-weight="700" fill="#52606d" text-anchor="start" >Not in this version</text>
+<text x="736" y="668" font-size="15" font-weight="400" fill="#52606d" text-anchor="start" >Recovery for a lost phone, a second admin, limits on repeated tries, a</text>
+<text x="736" y="690" font-size="15" font-weight="400" fill="#52606d" text-anchor="start" >record of who did what, and sending the link by email.</text>
+<text x="50" y="782" font-size="12.5" font-weight="400" fill="#52606d" text-anchor="start" >Proof of concept, built with AI assistance. The detailed version for engineers is diagram.png.</text>
+</svg>

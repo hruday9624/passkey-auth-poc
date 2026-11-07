@@ -1,0 +1,238 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1880 1260" width="1880" height="1260" role="img" aria-labelledby="t d" font-family="Segoe UI, system-ui, -apple-system, Roboto, Arial, sans-serif">
+<title id="t">Passkey-only sign-in: how the proof of concept works</title>
+<desc id="d">Sequence diagram in three parts: an admin adds a member and gets a one-time setup link, the member registers a passkey, and the member signs in with it. Four columns: the browser, the app server, Supabase Auth and the Supabase database. A side panel shows the check every protected page makes, what is refused, and the work left for the next phase.</desc>
+<rect width="1880" height="1260" fill="#ffffff"/>
+<text x="50" y="30" font-size="22" font-weight="700" fill="#1f2933" text-anchor="start" >Passkey-only sign-in: proof of concept</text>
+<text x="50" y="52" font-size="12.5" font-weight="400" fill="#52606d" text-anchor="start" >Drawn from the code and checked against it (handover/build.py). SB marks a call you would replace in another stack.</text>
+<rect x="38" y="64" width="344" height="1172" rx="10" fill="none" stroke="#b42318" stroke-width="1.4" stroke-dasharray="7 5"/>
+<text x="50" y="82" font-size="11" font-weight="700" fill="#b42318" text-anchor="start" >UNTRUSTED: the person&#x27;s own device</text>
+<rect x="388" y="64" width="344" height="1172" rx="10" fill="none" stroke="#166534" stroke-width="1.4" stroke-dasharray="7 5"/>
+<text x="400" y="82" font-size="11" font-weight="700" fill="#166534" text-anchor="start" >TRUSTED: our server code (Vercel, Mumbai)</text>
+<rect x="738" y="64" width="694" height="1172" rx="10" fill="none" stroke="#166534" stroke-width="1.4" stroke-dasharray="7 5"/>
+<text x="750" y="82" font-size="11" font-weight="700" fill="#166534" text-anchor="start" >TRUSTED: Supabase, hosted service (Mumbai)</text>
+<text x="210" y="108" font-size="15" font-weight="700" fill="#1f2933" text-anchor="middle" >Browser</text>
+<text x="210" y="125" font-size="11.5" font-weight="400" fill="#52606d" text-anchor="middle" >Admin or member. Holds its own session only.</text>
+<line x1="210" y1="136" x2="210" y2="1226" stroke="#cbd2d9" stroke-width="1.5" stroke-dasharray="3 5"/>
+<text x="560" y="108" font-size="15" font-weight="700" fill="#1f2933" text-anchor="middle" >App server</text>
+<text x="560" y="125" font-size="11.5" font-weight="400" fill="#52606d" text-anchor="middle" >Holds the secrets. Decides who gets in.</text>
+<line x1="560" y1="136" x2="560" y2="1226" stroke="#cbd2d9" stroke-width="1.5" stroke-dasharray="3 5"/>
+<text x="910" y="108" font-size="15" font-weight="700" fill="#1f2933" text-anchor="middle" >Supabase Auth</text>
+<text x="910" y="125" font-size="11.5" font-weight="400" fill="#52606d" text-anchor="middle" >Checks the passkey, signs the session token.</text>
+<line x1="910" y1="136" x2="910" y2="1226" stroke="#cbd2d9" stroke-width="1.5" stroke-dasharray="3 5"/>
+<text x="1260" y="108" font-size="15" font-weight="700" fill="#1f2933" text-anchor="middle" >Supabase database</text>
+<text x="1260" y="125" font-size="11.5" font-weight="400" fill="#52606d" text-anchor="middle" >No table access. 8 checked functions.</text>
+<line x1="1260" y1="136" x2="1260" y2="1226" stroke="#cbd2d9" stroke-width="1.5" stroke-dasharray="3 5"/>
+<text x="1411" y="100" font-size="10" font-weight="700" fill="#92400e" text-anchor="middle" >SB</text>
+<text x="1411" y="112" font-size="9" font-weight="400" fill="#92400e" text-anchor="middle" >column</text>
+<rect x="40" y="150" width="1390" height="28" rx="5" fill="#eef2ff"/>
+<text x="52" y="169" font-size="13.5" font-weight="700" fill="#1d4ed8" text-anchor="start" >1  Admin adds a member and gets a setup link</text>
+<text x="391.6" y="169" font-size="12" font-weight="400" fill="#52606d" text-anchor="start" >The admin is already signed in with a passkey.</text>
+<circle cx="26" cy="220" r="10" fill="#1f2933"/>
+<text x="26" y="224" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle" >1</text>
+<line x1="216" y1="220" x2="546" y2="220" stroke="#1f2933" stroke-width="1.6"/>
+<polygon points="554,220 545,215.5 545,224.5" fill="#1f2933"/>
+<text x="385.0" y="213" font-size="12" font-weight="400" fill="#1f2933" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="5" stroke-linejoin="round">Add member: name and email</text>
+<line x1="40" y1="233" x2="1430" y2="233" stroke="#eef0f3" stroke-width="1"/>
+<circle cx="26" cy="256" r="10" fill="#1f2933"/>
+<text x="26" y="260" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle" >2</text>
+<rect x="410" y="238" width="300" height="36" rx="6" fill="#ffffff" stroke="#1f2933" stroke-width="1.5"/>
+<text x="560" y="253.0" font-size="12" font-weight="400" fill="#1f2933" text-anchor="middle" >requireAdmin(): a passkey session, and the</text>
+<text x="560" y="268.0" font-size="12" font-weight="400" fill="#1f2933" text-anchor="middle" >database says admin</text>
+<line x1="40" y1="279" x2="1430" y2="279" stroke="#eef0f3" stroke-width="1"/>
+<circle cx="26" cy="312" r="10" fill="#1f2933"/>
+<text x="26" y="316" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle" >3</text>
+<line x1="566" y1="312" x2="896" y2="312" stroke="#1f2933" stroke-width="1.6"/>
+<polygon points="904,312 895,307.5 895,316.5" fill="#1f2933"/>
+<text x="735.0" y="305" font-size="12" font-weight="400" fill="#1f2933" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="5" stroke-linejoin="round">Create account with a random password nobody sees</text>
+<rect x="1396" y="304" width="30" height="16" rx="8" fill="#fef3c7" stroke="#b45309" stroke-width="1"/>
+<text x="1411" y="316" font-size="10" font-weight="700" fill="#92400e" text-anchor="middle" >SB</text>
+<line x1="40" y1="325" x2="1430" y2="325" stroke="#eef0f3" stroke-width="1"/>
+<circle cx="26" cy="358" r="10" fill="#1f2933"/>
+<text x="26" y="362" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle" >4</text>
+<line x1="566" y1="358" x2="1246" y2="358" stroke="#1f2933" stroke-width="1.6"/>
+<polygon points="1254,358 1245,353.5 1245,362.5" fill="#1f2933"/>
+<text x="910.0" y="351" font-size="12" font-weight="400" fill="#1f2933" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="5" stroke-linejoin="round">admin_add_member(actor, user, name). The database checks the actor is an admin again</text>
+<line x1="40" y1="371" x2="1430" y2="371" stroke="#eef0f3" stroke-width="1"/>
+<circle cx="26" cy="404" r="10" fill="#1f2933"/>
+<text x="26" y="408" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle" >5</text>
+<line x1="566" y1="404" x2="1246" y2="404" stroke="#1f2933" stroke-width="1.6"/>
+<polygon points="1254,404 1245,399.5 1245,408.5" fill="#1f2933"/>
+<text x="910.0" y="397" font-size="12" font-weight="400" fill="#1f2933" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="5" stroke-linejoin="round">issue_setup_link(actor, user, keyed hash of a 256-bit token, 15 min). The token itself is never stored</text>
+<line x1="40" y1="417" x2="1430" y2="417" stroke="#eef0f3" stroke-width="1"/>
+<circle cx="26" cy="450" r="10" fill="#1f2933"/>
+<text x="26" y="454" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle" >6</text>
+<line x1="554" y1="450" x2="224" y2="450" stroke="#1f2933" stroke-width="1.6" stroke-dasharray="5 4"/>
+<polygon points="216,450 225,445.5 225,454.5" fill="#1f2933"/>
+<text x="385.0" y="443" font-size="12" font-weight="400" fill="#1f2933" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="5" stroke-linejoin="round">Link shown once, with a Copy button</text>
+<line x1="40" y1="463" x2="1430" y2="463" stroke="#eef0f3" stroke-width="1"/>
+<circle cx="26" cy="486" r="10" fill="#1f2933"/>
+<text x="26" y="490" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle" >7</text>
+<rect x="60" y="468" width="300" height="36" rx="6" fill="#ffffff" stroke="#52606d" stroke-width="1.5" stroke-dasharray="5 4"/>
+<text x="210" y="483.0" font-size="12" font-weight="400" fill="#52606d" text-anchor="middle" >The admin sends the link by hand. The app</text>
+<text x="210" y="498.0" font-size="12" font-weight="400" fill="#52606d" text-anchor="middle" >sends nothing.</text>
+<line x1="40" y1="509" x2="1430" y2="509" stroke="#eef0f3" stroke-width="1"/>
+<rect x="40" y="510" width="1390" height="28" rx="5" fill="#eef2ff"/>
+<text x="52" y="529" font-size="13.5" font-weight="700" fill="#1d4ed8" text-anchor="start" >2  Member sets up a passkey</text>
+<text x="265.8" y="529" font-size="12" font-weight="400" fill="#52606d" text-anchor="start" >The link works once and runs out after 15 minutes.</text>
+<circle cx="26" cy="580" r="10" fill="#1f2933"/>
+<text x="26" y="584" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle" >8</text>
+<line x1="216" y1="580" x2="546" y2="580" stroke="#1f2933" stroke-width="1.6"/>
+<polygon points="554,580 545,575.5 545,584.5" fill="#1f2933"/>
+<text x="385.0" y="573" font-size="12" font-weight="400" fill="#1f2933" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="5" stroke-linejoin="round">GET /enrol?t=... shows a Continue page. Nothing is spent.</text>
+<line x1="40" y1="593" x2="1430" y2="593" stroke="#eef0f3" stroke-width="1"/>
+<circle cx="26" cy="626" r="10" fill="#1f2933"/>
+<text x="26" y="630" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle" >9</text>
+<line x1="216" y1="626" x2="546" y2="626" stroke="#1f2933" stroke-width="1.6"/>
+<polygon points="554,626 545,621.5 545,630.5" fill="#1f2933"/>
+<text x="385.0" y="619" font-size="12" font-weight="400" fill="#1f2933" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="5" stroke-linejoin="round">POST Continue (server action)</text>
+<line x1="40" y1="639" x2="1430" y2="639" stroke="#eef0f3" stroke-width="1"/>
+<circle cx="26" cy="672" r="10" fill="#1f2933"/>
+<text x="26" y="676" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle" >10</text>
+<line x1="566" y1="672" x2="1246" y2="672" stroke="#1f2933" stroke-width="1.6"/>
+<polygon points="1254,672 1245,667.5 1245,676.5" fill="#1f2933"/>
+<text x="910.0" y="665" font-size="12" font-weight="400" fill="#1f2933" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="5" stroke-linejoin="round">consume_setup_link(hash): one atomic update, returns the user or nothing</text>
+<line x1="40" y1="685" x2="1430" y2="685" stroke="#eef0f3" stroke-width="1"/>
+<circle cx="26" cy="718" r="10" fill="#1f2933"/>
+<text x="26" y="722" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle" >11</text>
+<line x1="566" y1="718" x2="896" y2="718" stroke="#1f2933" stroke-width="1.6"/>
+<polygon points="904,718 895,713.5 895,722.5" fill="#1f2933"/>
+<text x="735.0" y="711" font-size="12" font-weight="400" fill="#1f2933" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="5" stroke-linejoin="round">generateLink + verifyOtp: a session with amr = otp</text>
+<rect x="1396" y="710" width="30" height="16" rx="8" fill="#fef3c7" stroke="#b45309" stroke-width="1"/>
+<text x="1411" y="722" font-size="10" font-weight="700" fill="#92400e" text-anchor="middle" >SB</text>
+<line x1="40" y1="731" x2="1430" y2="731" stroke="#eef0f3" stroke-width="1"/>
+<circle cx="26" cy="754" r="10" fill="#1f2933"/>
+<text x="26" y="758" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle" >12</text>
+<rect x="410" y="736" width="300" height="36" rx="6" fill="#ffffff" stroke="#1f2933" stroke-width="1.5"/>
+<text x="560" y="751.0" font-size="12" font-weight="400" fill="#1f2933" text-anchor="middle" >Sets the poc_grant cookie: signed, names the</text>
+<text x="560" y="766.0" font-size="12" font-weight="400" fill="#1f2933" text-anchor="middle" >person, 5 minutes</text>
+<line x1="40" y1="777" x2="1430" y2="777" stroke="#eef0f3" stroke-width="1"/>
+<circle cx="26" cy="810" r="10" fill="#1f2933"/>
+<text x="26" y="814" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle" >13</text>
+<line x1="216" y1="810" x2="546" y2="810" stroke="#1f2933" stroke-width="1.6"/>
+<polygon points="554,810 545,805.5 545,814.5" fill="#1f2933"/>
+<text x="385.0" y="803" font-size="12" font-weight="400" fill="#1f2933" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="5" stroke-linejoin="round">May this session enrol? Needs the grant cookie</text>
+<line x1="40" y1="823" x2="1430" y2="823" stroke="#eef0f3" stroke-width="1"/>
+<circle cx="26" cy="856" r="10" fill="#1f2933"/>
+<text x="26" y="860" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle" >14</text>
+<line x1="216" y1="856" x2="896" y2="856" stroke="#1d4ed8" stroke-width="2.6"/>
+<polygon points="904,856 895,851.5 895,860.5" fill="#1d4ed8"/>
+<text x="560.0" y="849" font-size="12" font-weight="500" fill="#1d4ed8" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="5" stroke-linejoin="round">registerPasskey(): the device makes the key and it never leaves the device</text>
+<rect x="1396" y="848" width="30" height="16" rx="8" fill="#fef3c7" stroke="#b45309" stroke-width="1"/>
+<text x="1411" y="860" font-size="10" font-weight="700" fill="#92400e" text-anchor="middle" >SB</text>
+<line x1="40" y1="869" x2="1430" y2="869" stroke="#eef0f3" stroke-width="1"/>
+<circle cx="26" cy="902" r="10" fill="#1f2933"/>
+<text x="26" y="906" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle" >15</text>
+<line x1="216" y1="902" x2="546" y2="902" stroke="#1f2933" stroke-width="1.6"/>
+<polygon points="554,902 545,897.5 545,906.5" fill="#1f2933"/>
+<text x="385.0" y="895" font-size="12" font-weight="400" fill="#1f2933" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="5" stroke-linejoin="round">Finish: check a passkey exists, end the setup session</text>
+<rect x="1396" y="894" width="30" height="16" rx="8" fill="#fef3c7" stroke="#b45309" stroke-width="1"/>
+<text x="1411" y="906" font-size="10" font-weight="700" fill="#92400e" text-anchor="middle" >SB</text>
+<line x1="40" y1="915" x2="1430" y2="915" stroke="#eef0f3" stroke-width="1"/>
+<rect x="40" y="916" width="1390" height="28" rx="5" fill="#eef2ff"/>
+<text x="52" y="935" font-size="13.5" font-weight="700" fill="#1d4ed8" text-anchor="start" >3  Member signs in, every time</text>
+<text x="288.0" y="935" font-size="12" font-weight="400" fill="#52606d" text-anchor="start" >No email typed. The device offers the passkey it holds for this site.</text>
+<circle cx="26" cy="986" r="10" fill="#1f2933"/>
+<text x="26" y="990" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle" >16</text>
+<line x1="216" y1="986" x2="896" y2="986" stroke="#1d4ed8" stroke-width="2.6"/>
+<polygon points="904,986 895,981.5 895,990.5" fill="#1d4ed8"/>
+<text x="560.0" y="979" font-size="12" font-weight="500" fill="#1d4ed8" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="5" stroke-linejoin="round">signInWithPasskey(): Supabase checks the signature, session carries amr = passkey</text>
+<rect x="1396" y="978" width="30" height="16" rx="8" fill="#fef3c7" stroke="#b45309" stroke-width="1"/>
+<text x="1411" y="990" font-size="10" font-weight="700" fill="#92400e" text-anchor="middle" >SB</text>
+<line x1="40" y1="999" x2="1430" y2="999" stroke="#eef0f3" stroke-width="1"/>
+<circle cx="26" cy="1032" r="10" fill="#1f2933"/>
+<text x="26" y="1036" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle" >17</text>
+<line x1="216" y1="1032" x2="546" y2="1032" stroke="#1f2933" stroke-width="1.6"/>
+<polygon points="554,1032 545,1027.5 545,1036.5" fill="#1f2933"/>
+<text x="385.0" y="1025" font-size="12" font-weight="400" fill="#1f2933" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="5" stroke-linejoin="round">Finish sign-in</text>
+<line x1="40" y1="1045" x2="1430" y2="1045" stroke="#eef0f3" stroke-width="1"/>
+<circle cx="26" cy="1068" r="10" fill="#1f2933"/>
+<text x="26" y="1072" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle" >18</text>
+<rect x="410" y="1050" width="300" height="36" rx="6" fill="#f0fdf4" stroke="#166534" stroke-width="1.5"/>
+<text x="560" y="1065.0" font-size="12" font-weight="600" fill="#166534" text-anchor="middle" >THE GATE: getClaims() verifies the token,</text>
+<text x="560" y="1080.0" font-size="12" font-weight="600" fill="#166534" text-anchor="middle" >and amr must list passkey</text>
+<rect x="1396" y="1060" width="30" height="16" rx="8" fill="#fef3c7" stroke="#b45309" stroke-width="1"/>
+<text x="1411" y="1072" font-size="10" font-weight="700" fill="#92400e" text-anchor="middle" >SB</text>
+<line x1="40" y1="1091" x2="1430" y2="1091" stroke="#eef0f3" stroke-width="1"/>
+<circle cx="26" cy="1124" r="10" fill="#1f2933"/>
+<text x="26" y="1128" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle" >19</text>
+<line x1="566" y1="1124" x2="1246" y2="1124" stroke="#1f2933" stroke-width="1.6"/>
+<polygon points="1254,1124 1245,1119.5 1245,1128.5" fill="#1f2933"/>
+<text x="910.0" y="1117" font-size="12" font-weight="400" fill="#1f2933" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="5" stroke-linejoin="round">current_member(): the database reads the user from the token</text>
+<rect x="1396" y="1116" width="30" height="16" rx="8" fill="#fef3c7" stroke="#b45309" stroke-width="1"/>
+<text x="1411" y="1128" font-size="10" font-weight="700" fill="#92400e" text-anchor="middle" >SB</text>
+<line x1="40" y1="1137" x2="1430" y2="1137" stroke="#eef0f3" stroke-width="1"/>
+<circle cx="26" cy="1170" r="10" fill="#1f2933"/>
+<text x="26" y="1174" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle" >20</text>
+<line x1="554" y1="1170" x2="224" y2="1170" stroke="#1f2933" stroke-width="1.6" stroke-dasharray="5 4"/>
+<polygon points="216,1170 225,1165.5 225,1174.5" fill="#1f2933"/>
+<text x="385.0" y="1163" font-size="12" font-weight="400" fill="#1f2933" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="5" stroke-linejoin="round">Page: You are signed in, with the member&#x27;s name</text>
+<line x1="40" y1="1183" x2="1430" y2="1183" stroke="#eef0f3" stroke-width="1"/>
+<rect x="1460" y="150" width="390" height="250" rx="8" fill="#ffffff" stroke="#166534" stroke-width="1.5"/>
+<rect x="1460" y="150" width="390" height="26" rx="8" fill="#166534"/>
+<rect x="1460" y="168" width="390" height="8" fill="#166534"/>
+<text x="1472" y="168" font-size="12.5" font-weight="700" fill="#ffffff" text-anchor="start" >The gate: checked on every protected page and action</text>
+<text x="1474" y="196" font-size="12" font-weight="400" fill="#1f2933" text-anchor="start" >1. Verify the token&#x27;s signature and expiry with</text>
+<text x="1474" y="212" font-size="12" font-weight="400" fill="#1f2933" text-anchor="start" >getClaims(). Never getSession().</text>
+<text x="1474" y="234" font-size="12" font-weight="400" fill="#1f2933" text-anchor="start" >2. Its amr must list passkey. A setup-link session (otp)</text>
+<text x="1474" y="250" font-size="12" font-weight="400" fill="#1f2933" text-anchor="start" >or a password session fails here.</text>
+<text x="1474" y="272" font-size="12" font-weight="400" fill="#1f2933" text-anchor="start" >3. The database must say the person is a member</text>
+<text x="1474" y="288" font-size="12" font-weight="400" fill="#1f2933" text-anchor="start" >(current_member).</text>
+<text x="1474" y="310" font-size="12" font-weight="400" fill="#1f2933" text-anchor="start" >4. Admin actions: the database must say admin, and each</text>
+<text x="1474" y="326" font-size="12" font-weight="400" fill="#1f2933" text-anchor="start" >admin function checks it again.</text>
+<text x="1474" y="350" font-size="12" font-weight="600" fill="#166534" text-anchor="start" >Hiding a page is not the check. Each page and action</text>
+<text x="1474" y="366" font-size="12" font-weight="600" fill="#166534" text-anchor="start" >runs it for itself.</text>
+<rect x="1460" y="412" width="390" height="238" rx="8" fill="#ffffff" stroke="#b42318" stroke-width="1.5"/>
+<rect x="1460" y="412" width="390" height="26" rx="8" fill="#b42318"/>
+<rect x="1460" y="430" width="390" height="8" fill="#b42318"/>
+<text x="1472" y="430" font-size="12.5" font-weight="700" fill="#ffffff" text-anchor="start" >Refused, by design</text>
+<text x="1474" y="458" font-size="12" font-weight="400" fill="#1f2933" text-anchor="start" >x Setup-link session (otp) opening /home or /admin</text>
+<text x="1474" y="478" font-size="12" font-weight="400" fill="#1f2933" text-anchor="start" >x Password session opening /home or /admin</text>
+<text x="1474" y="498" font-size="12" font-weight="400" fill="#1f2933" text-anchor="start" >x Missing, forged or expired session cookie</text>
+<text x="1474" y="518" font-size="12" font-weight="400" fill="#1f2933" text-anchor="start" >x Signed in but not a member</text>
+<text x="1474" y="538" font-size="12" font-weight="400" fill="#1f2933" text-anchor="start" >x A member calling an admin action</text>
+<text x="1474" y="558" font-size="12" font-weight="400" fill="#1f2933" text-anchor="start" >x A link used twice, expired, unknown or malformed (all</text>
+<text x="1474" y="574" font-size="12" font-weight="400" fill="#1f2933" text-anchor="start" >show the same message)</text>
+<text x="1474" y="598" font-size="12" font-weight="600" fill="#52606d" text-anchor="start" >A link that is only visited, for example by a chat</text>
+<text x="1474" y="614" font-size="12" font-weight="600" fill="#52606d" text-anchor="start" >preview, stays unspent.</text>
+<rect x="1460" y="662" width="390" height="176" rx="8" fill="#ffffff" stroke="#1f2933" stroke-width="1.5"/>
+<rect x="1460" y="662" width="390" height="26" rx="8" fill="#1f2933"/>
+<rect x="1460" y="680" width="390" height="8" fill="#1f2933"/>
+<text x="1472" y="680" font-size="12.5" font-weight="700" fill="#ffffff" text-anchor="start" >Where the secrets live</text>
+<text x="1474" y="708" font-size="12" font-weight="400" fill="#1f2933" text-anchor="start" >Secret key, token pepper and cookie secret: server only,</text>
+<text x="1474" y="724" font-size="12" font-weight="400" fill="#1f2933" text-anchor="start" >never sent to the browser.</text>
+<text x="1474" y="746" font-size="12" font-weight="400" fill="#1f2933" text-anchor="start" >Database: 3 tables with row level security on and no</text>
+<text x="1474" y="762" font-size="12" font-weight="400" fill="#1f2933" text-anchor="start" >table access for anyone. 8 functions, 3 callable by a</text>
+<text x="1474" y="778" font-size="12" font-weight="400" fill="#1f2933" text-anchor="start" >signed-in user (reads) and 5 by the server only</text>
+<text x="1474" y="794" font-size="12" font-weight="400" fill="#1f2933" text-anchor="start" >(writes).</text>
+<rect x="1460" y="850" width="390" height="252" rx="8" fill="#ffffff" stroke="#52606d" stroke-width="1.5"/>
+<rect x="1460" y="850" width="390" height="26" rx="8" fill="#52606d"/>
+<rect x="1460" y="868" width="390" height="8" fill="#52606d"/>
+<text x="1472" y="868" font-size="12.5" font-weight="700" fill="#ffffff" text-anchor="start" >Next phase (not built)</text>
+<rect x="1474" y="892" width="176" height="30" rx="6" fill="#f5f7fa" stroke="#52606d" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="1562" y="911" font-size="11" font-weight="400" fill="#52606d" text-anchor="middle" >Change codes</text>
+<rect x="1658" y="892" width="176" height="30" rx="6" fill="#f5f7fa" stroke="#52606d" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="1746" y="905" font-size="11" font-weight="400" fill="#52606d" text-anchor="middle" >Lost-phone recovery by</text>
+<text x="1746" y="917" font-size="11" font-weight="400" fill="#52606d" text-anchor="middle" >teammate approval</text>
+<rect x="1474" y="928" width="176" height="30" rx="6" fill="#f5f7fa" stroke="#52606d" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="1562" y="947" font-size="11" font-weight="400" fill="#52606d" text-anchor="middle" >Batches and departments</text>
+<rect x="1658" y="928" width="176" height="30" rx="6" fill="#f5f7fa" stroke="#52606d" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="1746" y="947" font-size="11" font-weight="400" fill="#52606d" text-anchor="middle" >Audit register</text>
+<rect x="1474" y="964" width="176" height="30" rx="6" fill="#f5f7fa" stroke="#52606d" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="1562" y="983" font-size="11" font-weight="400" fill="#52606d" text-anchor="middle" >Rate limits and lockouts</text>
+<rect x="1658" y="964" width="176" height="30" rx="6" fill="#f5f7fa" stroke="#52606d" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="1746" y="983" font-size="11" font-weight="400" fill="#52606d" text-anchor="middle" >Installable app</text>
+<rect x="1474" y="1000" width="176" height="30" rx="6" fill="#f5f7fa" stroke="#52606d" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="1562" y="1019" font-size="11" font-weight="400" fill="#52606d" text-anchor="middle" >Second admin</text>
+<rect x="1658" y="1000" width="176" height="30" rx="6" fill="#f5f7fa" stroke="#52606d" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="1746" y="1019" font-size="11" font-weight="400" fill="#52606d" text-anchor="middle" >Content-Security-Policy</text>
+<rect x="1474" y="1036" width="176" height="30" rx="6" fill="#f5f7fa" stroke="#52606d" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="1562" y="1049" font-size="11" font-weight="400" fill="#52606d" text-anchor="middle" >Database check of the</text>
+<text x="1562" y="1061" font-size="11" font-weight="400" fill="#52606d" text-anchor="middle" >passkey rule (amr)</text>
+<rect x="1658" y="1036" width="176" height="30" rx="6" fill="#f5f7fa" stroke="#52606d" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="1746" y="1055" font-size="11" font-weight="400" fill="#52606d" text-anchor="middle" >External penetration test</text>
+<rect x="1460" y="1114" width="390" height="122" rx="8" fill="#f8fafc" stroke="#cbd2d9" stroke-width="1"/>
+<text x="1474" y="1136" font-size="11.5" font-weight="400" fill="#52606d" text-anchor="start" >Assumption: a fixed group that an admin adds, as in a</text>
+<text x="1474" y="1151" font-size="11.5" font-weight="400" fill="#52606d" text-anchor="start" >closed team list. Public self-signup is not covered.</text>
+<text x="1474" y="1184" font-size="11.5" font-weight="400" fill="#52606d" text-anchor="start" >Built with AI assistance. Passkeys are tied to the site</text>
+<text x="1474" y="1199" font-size="11.5" font-weight="400" fill="#52606d" text-anchor="start" >address and do not carry over to another domain.</text>
+</svg>

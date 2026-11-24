@@ -29,7 +29,7 @@ Only a session created by a passkey sign-in may open the protected area. A passw
 
 ## Running it (Supabase route)
 
-1. Create a Supabase project. In its Auth settings, turn on Passkeys and set the relying-party ID to the exact host you will deploy to. A passkey is tied to that host, and changing it later invalidates every passkey.
+1. Create a Supabase project. In its Auth settings, turn on Passkeys and set the relying-party ID to the exact host you will deploy to. A passkey is tied to that host, and changing it later invalidates every passkey. 
 2. Apply `supabase/migrations/20261031000000_passkey_poc.sql` in the SQL editor.
 3. Copy `.env.local.example` to `.env.local` and fill it in. `TOKEN_PEPPER` and `SESSION_COOKIE_SECRET` are random strings of 32 or more characters. `SUPABASE_SECRET_KEY` is server-only: never expose it or commit it.
 4. `npm ci`, then deploy somewhere with HTTPS on the host from step 1. Passkeys do not work on `localhost` or on preview URLs. `vercel.json` pins the region to Mumbai; change or delete that.

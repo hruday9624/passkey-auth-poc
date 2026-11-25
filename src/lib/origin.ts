@@ -8,6 +8,8 @@ import { headers } from "next/headers";
  * Only ever shown to the admin.
  */
 export async function originOf(): Promise<string> {
+  const configured = process.env.SITE_ORIGIN?.trim().replace(/\/$/, "");
+  if (configured && /^https?:\/\/[^/\s]+$/i.test(configured)) return configured;
   const production = process.env.VERCEL_PROJECT_PRODUCTION_URL;
   if (production && /^[a-z0-9.-]+$/i.test(production)) return `https://${production}`;
   const h = await headers();

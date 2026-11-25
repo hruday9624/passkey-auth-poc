@@ -11,6 +11,9 @@ const schema = z.object({
   // SESSION_COOKIE_SECRET signs the short-lived "an admin approved this" cookie.
   TOKEN_PEPPER: z.string().min(32),
   SESSION_COOKIE_SECRET: z.string().min(32),
+  RESEND_API_KEY: z.string().min(1).optional(),
+  EMAIL_FROM: z.string().min(1).optional(),
+  SITE_ORIGIN: z.url().optional(),
 });
 
 export type Env = z.infer<typeof schema>;
